@@ -18,6 +18,26 @@ class _MapPageState extends State<MapPage> {
     _getCurrentLocation();
   }
 
+  void calDistance(Position pos) {
+    // จุดที่ 1 (ตัวอย่าง ใช้จาก Position)
+    double lat1 = pos.latitude;
+    double lng1 = pos.longitude;
+
+    // จุดที่ 2 (ตัวอย่าง กำหนดเอง)
+    double lat2 = 13.7563; // ตัวอย่างพิกัด กทม.
+    double lng2 = 100.5018;
+
+    // ใช้ฟังก์ชันนี้คำนวณระยะทาง (หน่วยเป็นเมตร)
+    double distanceInMeters = Geolocator.distanceBetween(
+      lat1,
+      lng1,
+      lat2,
+      lng2,
+    );
+
+    print("ระยะทาง: $distanceInMeters เมตร");
+  }
+
   Future<void> _getCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) return;
@@ -49,7 +69,8 @@ class _MapPageState extends State<MapPage> {
                 ),
                 children: [
                   TileLayer(
-                    // urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    // urlTemplate:
+                    // 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     urlTemplate:
                         'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
                     userAgentPackageName: 'com.example.workshop_map',
