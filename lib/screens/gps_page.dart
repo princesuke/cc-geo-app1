@@ -9,6 +9,16 @@ class GpsPage extends StatefulWidget {
 }
 
 class _GpsPageState extends State<GpsPage> {
+  String location = 'ยังไม่ได้รับข้อมูล';
+
+  Future<void> getLocation() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      setState(() => location = 'กรุณาเปิด GPS');
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +30,7 @@ class _GpsPageState extends State<GpsPage> {
             // Text(location),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: getLocation,
               child: const Text('รับตำแหน่งปัจจุบัน'),
             ),
           ],
