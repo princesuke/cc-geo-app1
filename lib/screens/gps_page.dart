@@ -17,6 +17,25 @@ class _GpsPageState extends State<GpsPage> {
       setState(() => location = 'กรุณาเปิด GPS');
       return;
     }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        setState(() => location = 'ไม่ได้รับอนุญาต');
+        return;
+      }
+    }
+
+    Position pos = await Geolocator.getCurrentPosition(
+      // desiredAccuracy: LocationAccuracy.high,
+    );
+
+    setState(() {
+      location = 'Lat: ${pos.latitude}, Lng: ${pos.longitude}';
+    });
   }
 
   @override
@@ -27,7 +46,7 @@ class _GpsPageState extends State<GpsPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Text(location),
+            Text(location),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: getLocation,
