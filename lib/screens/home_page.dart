@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../routes/app_routes.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
